@@ -1,28 +1,30 @@
-import { ApolloServer } from "@apollo/server";
-import { GraphQLScalarType } from "graphql";
-import { createServer } from "http";
-import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { WebSocketServer } from "ws";
-import { useServer } from "graphql-ws/lib/use/ws";
-import express from "express";
-import { expressMiddleware } from "@apollo/server/express4";
-import bodyParser from "body-parser";
-import cors from "cors";
-import { PubSub } from "graphql-subscriptions";
+import { ApolloServer } from '@apollo/server';
+import { GraphQLScalarType } from 'graphql';
+import { createServer } from 'http';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import express from 'express';
+import { expressMiddleware } from '@apollo/server/express4';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { PubSub } from 'graphql-subscriptions';
+
 import {
   type Message,
   MessageSender,
   MessageStatus,
   type Resolvers,
-} from "../__generated__/resolvers-types";
-import { delay } from "./delay";
+} from '../__generated__/resolvers-types';
+
+import { delay } from './delay';
 
 const PORT = 4000;
 const pubsub = new PubSub();
 
-const MESSAGE_ADDED = "MESSAGE_ADDED";
-const MESSAGE_UPDATED = "MESSAGE_UPDATED";
+const MESSAGE_ADDED = 'MESSAGE_ADDED';
+const MESSAGE_UPDATED = 'MESSAGE_UPDATED';
 
 const messages: Message[] = Array.from(Array(30), (_, index) => ({
   id: String(index),
@@ -110,10 +112,10 @@ const resolvers: Resolvers = {
     messages: (_, { first, after, before }) => {
       // Convert cursors to indexes
       const afterIndex = after
-        ? messages.findIndex((msg) => msg.id === after)
+        ? messages.findIndex(msg => msg.id === after)
         : -1;
       const beforeIndex = before
-        ? messages.findIndex((msg) => msg.id === before)
+        ? messages.findIndex(msg => msg.id === before)
         : messages.length;
 
       // Filter and paginate the data
@@ -121,7 +123,7 @@ const resolvers: Resolvers = {
       const paginatedMessages = slicedMessages.slice(0, first || 10);
 
       // Create edges
-      const edges = paginatedMessages.map((message) => ({
+      const edges = paginatedMessages.map(message => ({
         node: message,
         cursor: message.id,
       }));
@@ -177,7 +179,7 @@ const resolvers: Resolvers = {
     },
   },
   MessagesCursor: new GraphQLScalarType({
-    name: "MessagesCursor",
+    name: 'MessagesCursor',
     parseValue(value) {
       return value;
     },
@@ -185,7 +187,7 @@ const resolvers: Resolvers = {
       return value;
     },
     parseLiteral(ast) {
-      return "value" in ast ? ast.value : null;
+      return 'value' in ast ? ast.value : null;
     },
   }),
 };
@@ -202,7 +204,7 @@ const httpServer = createServer(app);
 // Set up WebSocket server.
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: "/graphql",
+  path: '/graphql',
 });
 const serverCleanup = useServer({ schema }, wsServer);
 
@@ -228,7 +230,7 @@ const server = new ApolloServer({
 
 await server.start();
 app.use(
-  "/graphql",
+  '/graphql',
   cors<cors.CorsRequest>(),
   bodyParser.json(),
   expressMiddleware(server)
@@ -243,7 +245,7 @@ httpServer.listen(PORT, () => {
 });
 
 const asyncReplyMessage = () => {
-  let timeout = setTimeout(() => {
+  const timeout = setTimeout(() => {
     clearTimeout(timeout);
     if (messages[messages.length - 1]?.sender === MessageSender.Admin) {
       const index = messages.length + 1;

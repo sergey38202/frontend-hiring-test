@@ -1,0 +1,46 @@
+:root {
+  --color-primary: #667eea;
+  --color-primary-light: #818cf8;
+  --color-primary-dark: #5b67d8;
+  
+  --color-secondary: #d946ef;
+  
+  --color-success: #22c55e;
+  
+  --color-error: #ef4444;
+  
+  --color-warning: #f59e0b;
+  
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+  
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-light: #f1f5f9;
+  
+  --color-background-primary: #f8fafc;
+  --color-background-secondary: #f1f5f9;
+  --color-background-glass: rgba(255, 255, 255, 0.95);
+  
+  --color-border-light: rgba(0, 0, 0, 0.08);
+  --color-border-medium: rgba(0, 0, 0, 0.1);
+  --color-border-dark: rgba(0, 0, 0, 0.2);
+  
+  --color-shadow-light: rgba(0, 0, 0, 0.08);
+  --color-shadow-medium: rgba(0, 0, 0, 0.1);
+  --color-shadow-dark: rgba(0, 0, 0, 0.2);
+  --color-shadow-primary: rgba(102, 126, 234, 0.3);
+  --color-shadow-focus: rgba(102, 126, 234, 0.1);
+  
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
